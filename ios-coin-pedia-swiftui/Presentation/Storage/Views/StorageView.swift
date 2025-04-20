@@ -1,5 +1,5 @@
 //
-//  HomeView.swift
+//  StorageView.swift
 //  ios-coin-pedia-swiftui
 //
 //  Created by Goo on 4/20/25.
