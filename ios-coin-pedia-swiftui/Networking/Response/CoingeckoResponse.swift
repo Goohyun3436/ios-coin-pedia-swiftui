@@ -86,3 +86,31 @@ struct CGNFTDataInfo: Decodable {
     let h24AverageSalePrice: String
     let floorPrice24HPercentageChange: Double?
 }
+
+//MARK: - Search
+struct CGSearchDTO: Decodable {
+    let coins: [CGSearchInfoDTO]
+    
+    func transform() -> [CoinInfo] {
+        coins.map { $0.transform() }
+    }
+}
+
+struct CGSearchInfoDTO: Decodable {
+    let id: String
+    let name: String
+    let symbol: String
+    let marketCapRank: Int
+    let thumb: String
+    
+    func transform() -> CoinInfo {
+        CoinInfo(
+            id: id,
+            rank: "#\(marketCapRank)",
+            name: name,
+            symbol: symbol,
+            image: thumb,
+            isFavorite: false //UserStaticStorage.favoriteIds.contains(id)
+        )
+    }
+}

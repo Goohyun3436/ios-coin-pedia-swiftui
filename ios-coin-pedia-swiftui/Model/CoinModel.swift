@@ -18,12 +18,12 @@ protocol ThumbnailViewProtocol {
 //MARK: - Coin
 struct CoinInfo: Identifiable, ThumbnailViewProtocol {
     let id: String
-    let rank: String
+    var rank: String
     let name: String
     let symbol: String
     let image: String
-    let price: Double
-    let volatility: Double
+    var price: Double = 0  //refactor: nil로 대응
+    var volatility: Double = 0.0  //refactor: nil로 대응
     let isFavorite: Bool
     
     var priceFormat: String {

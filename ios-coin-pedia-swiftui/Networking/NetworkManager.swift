@@ -104,4 +104,13 @@ extension NetworkManager {
             CGError.self
         )
     }
+    
+    func fetchCGSearch(_ query: String) async -> Result<CGSearchDTO, CGError> {
+        await request(
+            CGRequest.search(query),
+            CGSearchDTO.self,
+            CGErrorResponse.self,
+            CGError.self
+        )
+    }
 }
