@@ -112,7 +112,7 @@ struct HomeView: View {
     ]
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             mainView()
                 .navigationTitle("Crypto Coin")
         }
