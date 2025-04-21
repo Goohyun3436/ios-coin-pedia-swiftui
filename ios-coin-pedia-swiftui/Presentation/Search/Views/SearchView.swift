@@ -15,17 +15,25 @@ struct SearchView: View {
     @State private var isValidationAlert: Bool = false
     @State private var validationError: SearchError? = nil
     
+    @State private var dummyCoinDetail: CoinDetailInfo = dummyCoinDetailInfo
+    
     var body: some View {
         NavigationStack {
             mainView()
                 .navigationTitle("Search")
+                .navigationDestination(for: CoinDetailInfo.self) { coinDetail in
+                    CoinDetailView(coinDetail: $dummyCoinDetail)
+                }
         }
     }
     
     private func mainView() -> some View {
         VerticalScrollView {
             ForEach(coins, id: \.id) { coin in
-                CoinFavoriteView(coin: coin)
+                NavigationLink(value: dummyCoinDetailInfo) {
+                    CoinFavoriteView(coin: coin)
+                }
+                .buttonStyle(.plain)
             }
         }
         .padding(.vertical, 16)

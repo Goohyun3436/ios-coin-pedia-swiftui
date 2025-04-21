@@ -14,10 +14,15 @@ struct HomeView: View {
     @State private var isAlert: Bool = false
     @State private var error: APIError? = nil
     
+    @State private var dummyCoinDetail: CoinDetailInfo = dummyCoinDetailInfo
+    
     var body: some View {
         NavigationStack {
             mainView()
                 .navigationTitle("Crypto Coin")
+                .navigationDestination(for: CoinDetailInfo.self) { coinDetail in
+                    CoinDetailView(coinDetail: $dummyCoinDetail)
+                }
         }
         .task {
             await callRequest()
@@ -30,8 +35,11 @@ struct HomeView: View {
                 sectionView("My Favorite") {
                     HorizontalScrollView {
                         ForEach(myCoins, id: \.id) { coin in
-                            CoinCardView(coin: coin)
-                                .frame(width: UIScreen.main.bounds.width * 0.6)
+                            NavigationLink(value: dummyCoinDetailInfo) {
+                                CoinCardView(coin: coin)
+                                    .frame(width: UIScreen.main.bounds.width * 0.6)
+                            }
+                            .buttonStyle(.plain)
                         }
                     }
                 }
@@ -39,8 +47,11 @@ struct HomeView: View {
                 sectionView("Top15 Coin") {
                     HorizontalScrollView {
                         VerticalGridView(items: topCoins, itemInColumn: 3) { coin in
-                            TopCoinRowView(coin: coin)
-                                .frame(width: UIScreen.main.bounds.width * 0.8)
+                            NavigationLink(value: dummyCoinDetailInfo) {
+                                TopCoinRowView(coin: coin)
+                                    .frame(width: UIScreen.main.bounds.width * 0.8)
+                            }
+                            .buttonStyle(.plain)
                         }
                     }
                 }
@@ -48,8 +59,11 @@ struct HomeView: View {
                 sectionView("Top7 NFT") {
                     HorizontalScrollView {
                         VerticalGridView(items: topNFTs, itemInColumn: 3) { nft in
-                            TopNFTRowView(nft: nft)
-                                .frame(width: UIScreen.main.bounds.width * 0.8)
+                            NavigationLink(value: dummyCoinDetailInfo) {
+                                TopNFTRowView(nft: nft)
+                                    .frame(width: UIScreen.main.bounds.width * 0.8)
+                            }
+                            .buttonStyle(.plain)
                         }
                     }
                 }
