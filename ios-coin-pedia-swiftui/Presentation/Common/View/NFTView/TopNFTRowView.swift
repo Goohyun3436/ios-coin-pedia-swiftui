@@ -12,14 +12,14 @@ struct TopNFTRowView: View {
     
     var body: some View {
         HStack {
-            Text(nft.scoreFormat)
+            Text(nft.rank)
                 .font(.body)
                 .bold()
                 .frame(width: 24, alignment: .trailing)
             ThumbnailView(item: nft)
             Spacer()
             VStack(alignment: .trailing) {
-                Text(nft.priceFormat)
+                Text(nft.price)
                     .font(.body)
                 Text(nft.volatilityFormat)
                     .foregroundColor(nft.volatilityColor)

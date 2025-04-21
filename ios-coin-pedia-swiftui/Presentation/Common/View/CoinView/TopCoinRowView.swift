@@ -12,7 +12,7 @@ struct TopCoinRowView: View {
     
     var body: some View {
         HStack {
-            Text(coin.scoreFormat)
+            Text(coin.rank)
                 .font(.body)
                 .bold()
                 .frame(width: 24, alignment: .trailing)

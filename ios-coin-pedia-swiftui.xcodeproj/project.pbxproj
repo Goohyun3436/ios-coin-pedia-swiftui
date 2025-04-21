@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		F86E45C32DB647D100164422 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = F86E45C22DB647D100164422 /* .gitignore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		F86E414E2DB4D40B00164422 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		F86E413D2DB4D40A00164422 /* ios-coin-pedia-swiftui.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-coin-pedia-swiftui.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F86E414D2DB4D40B00164422 /* ios-coin-pedia-swiftuiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ios-coin-pedia-swiftuiTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F86E41572DB4D40B00164422 /* ios-coin-pedia-swiftuiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ios-coin-pedia-swiftuiUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F86E45C22DB647D100164422 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +80,7 @@
 		F86E41342DB4D40A00164422 = {
 			isa = PBXGroup;
 			children = (
+				F86E45C22DB647D100164422 /* .gitignore */,
 				F86E413F2DB4D40A00164422 /* ios-coin-pedia-swiftui */,
 				F86E41502DB4D40B00164422 /* ios-coin-pedia-swiftuiTests */,
 				F86E415A2DB4D40B00164422 /* ios-coin-pedia-swiftuiUITests */,
@@ -212,6 +218,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F86E45C32DB647D100164422 /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

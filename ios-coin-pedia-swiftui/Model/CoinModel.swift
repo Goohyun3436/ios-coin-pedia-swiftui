@@ -18,7 +18,7 @@ protocol ThumbnailViewProtocol {
 //MARK: - Coin
 struct CoinInfo: Identifiable, ThumbnailViewProtocol {
     let id: String
-    let score: Int?
+    let rank: String
     let name: String
     let symbol: String
     let image: String
@@ -26,14 +26,11 @@ struct CoinInfo: Identifiable, ThumbnailViewProtocol {
     let volatility: Double
     let isFavorite: Bool
     
-    var scoreFormat: String {
-        "\(score ?? 0)"
-    }
     var priceFormat: String {
-        "₩\(Int(price).formatted())"
+        PriceManager.shared.price(price)
     }
     var volatilityFormat: String {
-        "+0.64%"
+        PriceManager.shared.volatility(volatility)
     }
     var volatilityColor: Color {
         if volatility > 0 {
@@ -94,21 +91,15 @@ struct CoinChartData: Identifiable, Hashable {
 //MARK: - NFT
 struct NFTInfo: Identifiable, ThumbnailViewProtocol {
     let id: String
-    let score: Int?
+    var rank: String = ""
     let name: String
     var symbol: String
     let image: String
-    let price: Double
+    let price: String
     let volatility: Double
     
-    var scoreFormat: String {
-        "\(score ?? 0)"
-    }
-    var priceFormat: String {
-        "\(Int(price).formatted()) ETH"
-    }
     var volatilityFormat: String {
-        "+0.64%"
+        PriceManager.shared.volatility(volatility)
     }
     var volatilityColor: Color {
         if volatility > 0 {

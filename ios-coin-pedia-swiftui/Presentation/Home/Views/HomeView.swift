@@ -8,113 +8,19 @@
 import SwiftUI
 
 struct HomeView: View {
-    let coins: [CoinInfo] = [
-        CoinInfo(
-            id: "btc",
-            score: 1,
-            name: "Bitcoin",
-            symbol: "BTC",
-            image: "https://cryptologos.cc/logos/bitcoin-btc-logo.png",
-            price: 69234245,
-            volatility: -0.64,
-            isFavorite: true
-        ),
-        CoinInfo(
-            id: "wbtc",
-            score: 2,
-            name: "Wrapped Bitcoin",
-            symbol: "WBTC",
-            image: "https://cryptologos.cc/logos/wrapped-bitcoin-wbtc-logo.png",
-            price: 67886314,
-            volatility: -2.73,
-            isFavorite: true
-        )
-    ]
-    let topCoins: [CoinInfo] = [
-        CoinInfo(
-            id: "btc",
-            score: 1,
-            name: "Bitcoin",
-            symbol: "BTC",
-            image: "https://cryptologos.cc/logos/bitcoin-btc-logo.png",
-            price: 69234245,
-            volatility: -0.64,
-            isFavorite: true
-        ),
-        CoinInfo(
-            id: "wbtc",
-            score: 2,
-            name: "Wrapped Bitcoin",
-            symbol: "WBTC",
-            image: "https://cryptologos.cc/logos/wrapped-bitcoin-wbtc-logo.png",
-            price: 67886314,
-            volatility: -2.73,
-            isFavorite: true
-        ),
-        CoinInfo(
-            id: "btc2",
-            score: 1,
-            name: "Bitcoin",
-            symbol: "BTC",
-            image: "https://cryptologos.cc/logos/bitcoin-btc-logo.png",
-            price: 69234245,
-            volatility: -0.64,
-            isFavorite: true
-        ),
-        CoinInfo(
-            id: "wbtc2",
-            score: 2,
-            name: "Wrapped Bitcoin",
-            symbol: "WBTC",
-            image: "https://cryptologos.cc/logos/wrapped-bitcoin-wbtc-logo.png",
-            price: 67886314,
-            volatility: -2.73,
-            isFavorite: true
-        )
-    ]
-    let topNFTs: [NFTInfo] = [
-        NFTInfo(
-            id: UUID().uuidString,
-            score: 1,
-            name: "Sappy Seals",
-            symbol: "LTC",
-            image: "sappy_seals",
-            price: 1.7,
-            volatility: -20.87
-        ),
-        NFTInfo(
-            id: UUID().uuidString,
-            score: 2,
-            name: "Azuki",
-            symbol: "LTC",
-            image: "azuki",
-            price: 2.3,
-            volatility: 3.45
-        ),
-        NFTInfo(
-            id: UUID().uuidString,
-            score: 3,
-            name: "Doodles",
-            symbol: "LTC",
-            image: "doodles",
-            price: 1.2,
-            volatility: -5.12
-        ),
-        NFTInfo(
-            id: UUID().uuidString,
-            score: 4,
-            name: "CloneX",
-            symbol: "LTC",
-            image: "clonex",
-            price: 3.0,
-            volatility: 8.74
-        )
-    ]
+    @State private var myCoins: [CoinInfo] = []
+    @State private var topCoins: [CoinInfo] = []
+    @State private var topNFTs: [NFTInfo] = []
+    @State private var isAlert: Bool = false
+    @State private var error: APIError? = nil
     
     var body: some View {
         NavigationStack {
             mainView()
                 .navigationTitle("Crypto Coin")
+        }
+        .task {
+            await callRequest()
         }
     }
     
@@ -123,7 +29,7 @@ struct HomeView: View {
             VStack(alignment: .leading, spacing: 24) {
                 sectionView("My Favorite") {
                     HorizontalScrollView {
-                        ForEach(coins, id: \.id) { coin in
+                        ForEach(myCoins, id: \.id) { coin in
                             CoinCardView(coin: coin)
                                 .frame(width: UIScreen.main.bounds.width * 0.6)
                         }
@@ -150,6 +56,12 @@ struct HomeView: View {
             }
             .padding(.top)
         }
+        .configureAlert(
+            isShow: $isAlert,
+            title: error?.title,
+            message: error?.message,
+            primaryButton: .default(Text("확인"))
+        )
     }
     
     private func sectionView<Content: View>(
@@ -164,8 +76,19 @@ struct HomeView: View {
             content()
         }
     }
-}
-
-#Preview {
-    HomeView()
+    
+    private func callRequest() async {
+        let result = await NetworkManager.shared.fetchCGTrending()
+        
+        switch result {
+        case .success(let data):
+            let object = data.transform()
+            myCoins = object.coins  //refactor: realm 데이터로 교체
+            topCoins = object.coins
+            topNFTs = object.nfts
+        case .failure(let err):
+            isAlert = true
+            error = err
+        }
+    }
 }
